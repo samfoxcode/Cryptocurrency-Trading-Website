@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}" type = "text/css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+        <title>
+            PHFEASANT PHFINANCIAL
+        </title>
+    </head>
+
+    <body class="body" style="background-color:rgb(154, 214, 253)">
+        <div>
+            Hello
+        </div>
+        <div>
+            <form type="get" action="." style="margin: 0">
+            <input  id="search_box" type="text" name="search_box"  placeholder="Search..." >
+            <button id="search_submit" type="submit" >Submit</button>
+            </form>
+        </div>
+        <div>
+            <a href="/home/about">About</a><br />
+        </div>
+    </body>
+</html>
