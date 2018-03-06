@@ -2,17 +2,26 @@
 <html>
     <head>
         {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}" type = "text/css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
             ABOUT PHFEASANT PHFINANCIAL
         </title>
     </head>
 
-    <body>
+    <body class="body" style="background-color:#c6e8ff">
         <div>
             Hello. This is the about.
         </div>
+        <div class='container-fluid'>
+                <br><br>
+                   {% block content %}
+                   {% endblock %}	
+                </div>
         <div>
-            <a href="/home/index">Home</a><br />
+        <footer>
+            <a href="/home/index">go back</a>
+        </footer.>
         </div>
     </body>
 </html>
