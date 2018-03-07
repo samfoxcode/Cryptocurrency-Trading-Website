@@ -39,8 +39,15 @@
                         </li>
                     </ul>
                 </div>
-                <div class="row text-center">
-                    <h3>About Us</h3>
+                <style>
+                    .header {
+                        margin-left: auto;
+                        margin-right: auto;
+                        text-align: center;
+                    }
+                </style>
+                <div class="header">
+                    <h2 class="container-fluid">About Us</h2>
                 </div>
                 <hr>
             </div>
@@ -85,11 +92,25 @@
     </div>
     <br>
     <br>
-    <footer>
-        <center>
-            <a href="/home/index">go back home</a>
-        </center>
-        </footer>
+    <style>
+        .footer {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 1rem;
+            background-color: #3a3e44;
+            text-align: center;
+        }
+    </style>
+    <footer class="footer">
+        <div class='container-fluid'>
+            <p>
+                <a href="/home/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
+            </p>
+            <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
+        </div>
+    </footer>
 
 </body>
 

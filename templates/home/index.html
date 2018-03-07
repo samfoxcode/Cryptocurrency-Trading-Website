@@ -11,45 +11,57 @@
     <title>
         PHFEASANT PHFINANCIAL
     </title>
+    <div class="col-sm-10">
+        <br>
+        <div class="dropdown">
+            <style>
+                .glyphicon-menu-hamburger {
+                    font-size: 20px;
+                }
+            </style>
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="/account/account">account</a>
+                </li>
+                <li>
+                    <a href="/home/register">register</a>
+                </li>
+                <li>
+                    <a href="/home/contact">contact</a>
+                </li>
+                <li>
+                    <a href="/home/about">about</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </head>
 
 <body class="body" style="background-color:#c6e8ff">
     <div class="container-fluid" style="min-height:95%; ">
-        <div class="row">
-            <div class="col-sm-10">
-                <br>
-                <div class="dropdown">
-                    <style>
-                        .glyphicon-menu-hamburger {
-                            font-size: 20px;
-                        }
-                    </style>
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-menu-hamburger"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="/account/account">account</a>
-                        </li>
-                        <li>
-                            <a href="/home/register">register</a>
-                        </li>
-                        <li>
-                            <a href="/home/contact">contact</a>
-                        </li>
-                        <li>
-                            <a href="/home/about">about</a>
-                        </li>
-                    </ul>
-                </div>
-                <h3 class="text-center">PHF-PHF</h3>
+            <style>
+                .header {
+                    margin-left: auto;
+                    margin-right: auto;
+                    text-align: right;
+                }
+            </style>
+            <div class="header">
+                <h2 class="container-fluid text-center">PHF-PHF</h2>
             </div>
-        </div>
         <hr>
 
         <br>
 
         <br>
+        <style>
+            .navbar {
+                padding: .5rem
+            }
+        </style>
         <nav class="navbar" style="background-color:#1b303f">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
@@ -83,23 +95,26 @@
         </div>
     </div>
 
-    <div class="col-sm-10">
-        <div class='container-fluid'>
-            <br>
-            <br> {% block content %} {% endblock %}
-        </div>
-    </div>
 
-    <footer class="container-fluid text-center">
-        <p>
-            <a href="/home/about/" title="about">about</a>
-        </p>
-        <p>
-            Copyright &copy; 2018 PHF-PHF
-        </p>
+    <style>
+        .footer {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 1rem;
+            background-color: #3a3e44;
+            text-align: center;
+        }
+    </style>
+    <footer class="footer">
+        <div class='container-fluid'>
+            <p>
+                <a href="/home/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
+            </p>
+            <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
+        </div>
     </footer>
 </body>
-
-
 
 </html>
