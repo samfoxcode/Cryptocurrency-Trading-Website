@@ -10,6 +10,9 @@ def about(request):
 def register(request):
     return render(request, 'home/register.html')
 
+def contact(request):
+    return render(request, 'home/contact.html')
+
 def search(request):
     if request.method == 'GET':
 
