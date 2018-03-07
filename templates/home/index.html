@@ -19,15 +19,20 @@
             <div class="col-sm-10">
                 <br>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Page
-                        <span class="caret"></span>
+                    <style>
+                    .glyphicon-menu-hamburger {
+                        font-size: 20px;
+                    }
+                    </style>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-menu-hamburger"></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#">account</a>
                         </li>
                         <li>
-                            <a href="#">browse</a>
+                            <a href="/home/register">register</a>
                         </li>
                         <li>
                             <a href="#">contact</a>
@@ -37,9 +42,7 @@
                         </li>
                     </ul>
                 </div>
-                <center>
-                    <h3>PHF-PHF</h3>
-                </center>
+                <h3 class="text-center">PHF-PHF</h3>
             </div>
         </div>
         <hr>
@@ -73,7 +76,7 @@
             </center>
         </div>
 
-        <div class="jumbotron">
+        <div class="jumbotron text-center">
             <center>
                 This will be the chart area
             </center>
@@ -86,23 +89,17 @@
             <br> {% block content %} {% endblock %}
         </div>
     </div>
-    <footer>
-        <div class="container-fluid" style='margin-left:15px'>
-            <center>
-                <a href="/home/about">about</a>
-            </center>
-        </div>
-        <div>
-            <center>
-                <p>
-                    <small>
-                        Copyright &copy; 2018 for PHF-PHF
-                    </small>
-                </p>
-            </center>
-        </div>
-    </footer>
 
+    <footer class="container-fluid text-center">
+        <p>
+            <a href="/home/about/" title="about">about</a>
+        </p>
+        <p>
+            Copyright &copy; 2018 PHF-PHF
+        </p>
+    </footer>
 </body>
+
+
 
 </html>

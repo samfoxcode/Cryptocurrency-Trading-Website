@@ -8,20 +8,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>
+        ABOUT PHFEASANT PHFINANCIAL
+    </title>
     <div class="container-fluid" style="min-height:95%; ">
         <div class="row">
             <div class="col-sm-10">
                 <br>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Page
-                        <span class="caret"></span>
+                    <style>
+                        .glyphicon-menu-hamburger {
+                            font-size: 20px;
+                        }
+                    </style>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-menu-hamburger"></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#">account</a>
                         </li>
                         <li>
-                            <a href="#">browse</a>
+                            <a href="/home/register">register</a>
                         </li>
                         <li>
                             <a href="#">contact</a>
@@ -31,11 +39,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-sm-10">
-                    <center>
-                        <h3>About Us</h3>
-                        <br>
-                    </center>
+                <div class="row text-center">
+                    <h3>About Us</h3>
                 </div>
                 <hr>
             </div>
@@ -48,23 +53,44 @@
     <br>
     <div>
         <center>
-            <p> This website was created with the intention of building a platform where anyone can trade cryptocurrencies but
+            <h5> This website was created with the intention of building a platform where anyone can trade cryptocurrencies but
                 in a social way. As time goes on this site will be expanding and growing so that we can continually support
                 more people and more trading.
-            </p>
+            </h5>
         </center>
     </div>
     <div class='container-fluid'>
         <br>
         <br> {% block content %} {% endblock %}
     </div>
-    <div>
-        <footer>
-            <center>
-                <a href="/home/index">go back</a>
-            </center>
-            </footer.>
+    <br>
+    <br>
+    <div class="container-fluid text-center">
+        <h3>SERVICES</h3>
+        <br>
+        <div class="row">
+            <div class="col-sm-4">
+                <h4>TRADING</h4>
+                <p>as many coins supported as possible</p>
+            </div>
+            <div class="col-sm-4">
+                <h4>INTELLIGENCE</h4>
+                <p>trading smart</p>
+            </div>
+            <div class="col-sm-4">
+                <h4>SECURITY</h4>
+                <p>your info, secure</p>
+            </div>
+        </div>
     </div>
+    <br>
+    <br>
+    <footer>
+        <center>
+            <a href="/home/index">go back</a>
+        </center>
+        </footer.>
+
 </body>
 
 </html>
