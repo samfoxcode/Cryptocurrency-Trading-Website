@@ -8,35 +8,55 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>
-        ABOUT PHFEASANT PHFINANCIAL
-    </title>
+    <div class="container-fluid" style="min-height:95%; ">
+        <div class="row">
+            <div class="col-sm-10">
+                <br>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Page
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">account</a>
+                        </li>
+                        <li>
+                            <a href="#">browse</a>
+                        </li>
+                        <li>
+                            <a href="#">contact</a>
+                        </li>
+                        <li>
+                            <a href="/home/index">home</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-10">
+                    <center>
+                        <h3>About Us</h3>
+                        <br>
+                    </center>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
 </head>
 
 <body class="body" style="background-color:#c6e8ff">
-    <div class="col-sm-10">
-        <br>
-        <center>
-            <h3>About Us</h3>
-        </center>
-    </div>
-    <hr>
 
+    <br>
     <div>
         <center>
-        <p> This website was created with the intention of building
-            a platform where anyone can trade cryptocurrencies but
-            in a social way. As time goes on this site will be expanding
-            and growing so that we can continually support more people
-            and more trading.
-        </p>
+            <p> This website was created with the intention of building a platform where anyone can trade cryptocurrencies but
+                in a social way. As time goes on this site will be expanding and growing so that we can continually support
+                more people and more trading.
+            </p>
         </center>
     </div>
     <div class='container-fluid'>
         <br>
-        <br> 
-        {% block content %} 
-        {% endblock %}
+        <br> {% block content %} {% endblock %}
     </div>
     <div>
         <footer>
