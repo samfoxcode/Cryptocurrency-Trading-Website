@@ -18,8 +18,14 @@ def DataStream():
         #Request data from coinmarketcap and parse the data
         r = requests.get('https://api.coinmarketcap.com/v1/ticker/')
         for coin in r.json():
+
             print(datetime.now(), coin["symbol"], coin["price_usd"],)
-            coinz = Coins.objects.get(ticker= coin["symbol"])
+            if not Coins.objects.filter(ticker = coin["symbol"]).exists():
+                coinz = Coins(ticker = coin["symbol"], website = "http", current_price = coin["price_usd"], gain_loss = 0)
+                coinz.save()
+            else:
+                coinz = Coins.objects.get(ticker= coin["symbol"])
+
             Price = Old_Prices(timestamp = datetime.now(), ticker = coinz, accuracy_projection = 0, price = coin["price_usd"])
             Price.save()
 
