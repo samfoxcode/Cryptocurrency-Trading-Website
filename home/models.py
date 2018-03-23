@@ -1,4 +1,9 @@
 from django.db import models
+import os
+import django
+import crypto_web
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crypto_web.settings")
+django.setup()
 
 class Coins(models.Model):
     ticker = models.CharField(max_length=10, unique=True)
