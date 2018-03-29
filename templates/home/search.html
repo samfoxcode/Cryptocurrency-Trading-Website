@@ -1,0 +1,7 @@
+{% if coins %}
+{% for coin in coins %} 
+    <p>{{coin.coin_name}}</p> 
+    <p>{{coin.ticker}}</p>  
+    <p>{{coin.current_price}}</p>
+{% endfor %}
+{% endif %}
