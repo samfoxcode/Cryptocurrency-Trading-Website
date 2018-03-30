@@ -1,7 +1,13 @@
 from django.db import models
+import os
+import django
+import crypto_web
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crypto_web.settings")
+django.setup()
 
 class Coins(models.Model):
     ticker = models.CharField(max_length=10, unique=True)
+    coin_name = models.CharField(max_length=10)
     website = models.CharField(max_length=30)
     current_price = models.DecimalField(decimal_places=3, max_digits=12)
     gain_loss = models.DecimalField(decimal_places=3, max_digits=12)
