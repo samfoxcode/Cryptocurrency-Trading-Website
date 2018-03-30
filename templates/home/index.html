@@ -85,6 +85,18 @@
                         <button id="search_submit" type="submit">onward</button>
                     </form>
                 </div>
+                <br>
+                <div class="well bs-sidebar" id="sidebar" style="background-color:#005f9e">
+                    <center>
+                        {% if coins %}
+                        {% for coin in coins %} 
+                        <h5 style="color: rgb(255, 255, 255)">{{coin.ticker}}</h5>  
+                        <h5 style="color: rgb(255, 255, 255)">${{coin.current_price}}</h5>
+                        <a href={{coin.website}} style="color: rgb(255, 255, 255)">{{coin.website}}</a>
+                        {% endfor %}
+                        {% endif %}
+                    </center>
+                </div>
             </center>
         </div>
 

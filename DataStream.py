@@ -19,7 +19,16 @@ def DataStream():
         for coin in r.json():
             print(datetime.now(), coin["symbol"], coin["price_usd"],)
             if not Coins.objects.filter(ticker = coin["symbol"]).exists():
-                coinz = Coins(ticker = coin["symbol"], coin_name=coin["name"], website = "http", current_price = coin["price_usd"], gain_loss = 0)
+                web = "NO WEBSITE"
+                if coin["symbol"] == "BTC":
+                    web = "https://bitcoin.org"
+                if coin["symbol"] == "XRP":
+                    web = "https://ripple.com"
+                if coin["symbol"] == "LTC":
+                    web = "https://litecoin.org"
+                if coin["symbol"] == "ETH":
+                    web = "https://Ethereum.org"
+                coinz = Coins(ticker = coin["symbol"], coin_name=coin["name"], website = web, current_price = coin["price_usd"], gain_loss = 0)
                 coinz.save()
             else:
                 coinz = Coins.objects.get(ticker= coin["symbol"])

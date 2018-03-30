@@ -18,4 +18,4 @@ def search(request):
         search_query = request.GET.get('search_box', None)
         status = Coins.objects.filter(coin_name=search_query)
         coins = {"coins": status}
-        return render(request, 'home/search.html', coins)
+        return render(request, 'home/index.html', coins)
