@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from home.models import Coins
-def index(request):
+def index(request):   
     return render(request, 'home/index.html')
 
 def about(request):
@@ -17,5 +17,6 @@ def search(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
         status = Coins.objects.filter(coin_name=search_query)
-        coins = {"coins": status}
+        coins = {"coins": status} #true or false
         return render(request, 'home/index.html', coins)
+

@@ -24,6 +24,9 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
+                     <a href="/home/index">home</a>
+                </li>
+                <li>
                     <a href="/account/account">account</a>
                 </li>
                 <li>
@@ -66,13 +69,13 @@
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#" style="color: rgb(255, 255, 255)">Bitcoin</a>
+                        <a href="http://127.0.0.1:8000/home/" style="color: rgb(255, 255, 255)">Bitcoin</a>
                     </li>
                     <li>
-                        <a href="#" style="color: rgb(255, 255, 255)">Ethereum</a>
+                        <a href="http://127.0.0.1:8000/home/" style="color: rgb(255, 255, 255)">Ethereum</a>
                     </li>
                     <li>
-                        <a href="#" style="color: rgb(255, 255, 255)">Litcoin</a>
+                        <a href="http://127.0.0.1:8000/home/" style="color: rgb(255, 255, 255)">Litcoin</a>
                     </li>
                 </ul>
             </div>
@@ -102,17 +105,44 @@
 
         <div class="jumbotron text-center">
             <center>
-                This will be the chart area
+                    <h1 style="text-align:center;">COIN HISTORY</h1>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() { 
+        var data = google.visualization.arrayToDataTable([
+                        ['Year', 'Bitcoin', 'Ethereum','Litecoin'],
+                         ['2015',  455,  11,    0],
+                         ['2016',  978,  15,    0],
+                         ['2017',  19343,   735,    302],
+                         ['2018',  16937,  1413,    295]
+                         ]);
+
+        var options = {
+          hAxis: {
+          title: 'Times'
+          },
+          vAxis: {
+            title: 'Rates'
+          },
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <div id="curve_chart" style="width: 500px; height:250px"></div>
             </center>
         </div>
     </div>
-
-
     <style>
         .footer {
             position: absolute;
             right: 0;
-            bottom: 0;
             left: 0;
             padding: 1rem;
             background-color: #3a3e44;
