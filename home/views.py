@@ -7,6 +7,9 @@ def index(request):
 def about(request):
     return render(request, 'home/about.html')
 
+def signin(request):
+    return render(request, 'home/signin.html')
+
 def register(request):
     return render(request, 'home/register.html')
 
