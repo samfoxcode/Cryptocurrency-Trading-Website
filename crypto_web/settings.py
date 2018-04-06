@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_mongoengine',
     'home',
     'account',
 ]
@@ -84,13 +83,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-MONGODB_DATABASES = {
-    "default": {
-        "name": '431',
-        "host": 'localhost:27017'
     }
 }
 

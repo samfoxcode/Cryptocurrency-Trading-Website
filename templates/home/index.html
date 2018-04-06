@@ -8,6 +8,58 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .slideanim {
+            visibility: hidden;
+        }
+
+        .slide {
+            animation-name: slide;
+            -webkit-animation-name: slide;
+            animation-duration: 1s;
+            -webkit-animation-duration: 1s;
+            visibility: visible;
+        }
+
+        @keyframes slide {
+            0% {
+                opacity: 0;
+                transform: translateY(70%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0%);
+            }
+        }
+
+        @-webkit-keyframes slide {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(70%);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0%);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .col-sm-4 {
+                text-align: center;
+                margin: 25px 0;
+            }
+            .btn-lg {
+                width: 100%;
+                margin-bottom: 35px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .logo {
+                font-size: 150px;
+            }
+        }
+    </style>
     <title>
         PHFEASANT PHFINANCIAL
     </title>
@@ -23,6 +75,9 @@
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
             </button>
             <ul class="dropdown-menu">
+                <li>
+                    <a href="/home/index">home</a>
+                </li>
                 <li>
                     <a href="/account/account">account</a>
                 </li>
@@ -42,16 +97,16 @@
 
 <body class="body" style="background-color:#c6e8ff">
     <div class="container-fluid" style="min-height:95%; ">
-            <style>
-                .header {
-                    margin-left: auto;
-                    margin-right: auto;
-                    text-align: right;
-                }
-            </style>
-            <div class="header">
-                <h2 class="container-fluid text-center">PHF-PHF</h2>
-            </div>
+        <style>
+            .header {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: right;
+            }
+        </style>
+        <div class="header">
+            <h2 class="container-fluid text-center">PHF-PHF</h2>
+        </div>
         <hr>
 
         <br>
@@ -66,55 +121,117 @@
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#" style="color: rgb(255, 255, 255)">Bitcoin</a>
+                        <a href="/home/index" style="color: rgb(255, 255, 255)">Bitcoin</a>
                     </li>
                     <li>
-                        <a href="#" style="color: rgb(255, 255, 255)">Ethereum</a>
+                        <a href="/home/index" style="color: rgb(255, 255, 255)">Ethereum</a>
                     </li>
                     <li>
-                        <a href="#" style="color: rgb(255, 255, 255)">Litcoin</a>
+                        <a href="/home/index" style="color: rgb(255, 255, 255)">Litcoin</a>
                     </li>
                 </ul>
+					<input type="button" class="btn btn-warning" onClick="parent.location='/home/signin'" value="Sign-In" style="float: right;">
             </div>
         </nav>
         <div class="well bs-sidebar" id="sidebar" style="background-color:#0070bb">
             <center>
                 <div>
-                    <form type="get" action="." style="margin: 0">
+                    <form type="get" action="{%url 'search' %}" style="margin: 0">
                         <input id="search_box" type="text" name="search_box" placeholder="Search...">
                         <button id="search_submit" type="submit">onward</button>
                     </form>
+                </div>
+                <br>
+                <div class="well bs-sidebar" id="sidebar" style="background-color:#005f9e">
+                    <center>
+                        {% if coins %} {% for coin in coins %}
+                        <h5 style="color: rgb(255, 255, 255)">{{coin.ticker}}</h5>
+                        <h5 style="color: rgb(255, 255, 255)">${{coin.current_price}}</h5>
+                        <a href={{coin.website}} style="color: rgb(255, 255, 255)">{{coin.website}}</a>
+                        {% endfor %} {% endif %}
+                    </center>
                 </div>
             </center>
         </div>
 
         <div class="jumbotron text-center">
             <center>
-                This will be the chart area
+                <h1 style="text-align:center;">COIN HISTORY</h1>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', { packages: ['corechart', 'line'] });
+                    google.charts.setOnLoadCallback(drawBackgroundColor);
+
+                    function drawBackgroundColor() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'X');
+                        data.addColumn('number', 'Bitcoin');
+                        data.addColumn('number', 'Ethereum');
+                        data.addColumn('number', 'Litecoin');
+                        data.addRows([
+                            ['2015', 455, 11, 0],
+                            ['2016', 978, 15, 0],
+                            ['2017', 19343, 735, 302],
+                            ['2018', 16937, 1413, 295]
+                        ]);
+
+                        var options = {
+                            hAxis: {
+                                title: 'Year'
+                            },
+                            vAxis: {
+                                title: 'Value'
+                            },
+                            backgroundColor: 'white'
+                        };
+
+                        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                    }
+                </script>
+                <div id="chart_div"></div>
             </center>
         </div>
     </div>
 
-
+    <div></div>
     <style>
-        .footer {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            padding: 1rem;
-            background-color: #3a3e44;
-            text-align: center;
+        * {
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrapper {
+            min-height: 8%;
+            height: auto !important;
+            height: 8%;
+            margin: 0 auto -20px;
+            background-color: #1b303f;
+            /* the bottom margin is the negative value of the footer's height */
+        }
+
+        .footer,
+        .push {
+            height: 20px;
+            /* .push must be the same height as .footer */
         }
     </style>
-    <footer class="footer">
-        <div class='container-fluid'>
-            <p>
-                <a href="/home/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
-            </p>
-            <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
-        </div>
-    </footer>
+    <div class="wrapper">
+        <footer class="container-fluid text-center">
+            <div class='container-fluid'>
+                <p>
+                    <a href="/home/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
+                </p>
+                <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
+            </div>
+        </footer>
+        <div class="push"></div>
+    </div>
+    <div class="footer"></div>
 </body>
 
 </html>
