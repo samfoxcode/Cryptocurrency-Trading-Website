@@ -2,8 +2,10 @@ from django.db import models
 import os
 import django
 import crypto_web
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crypto_web.settings")
 django.setup()
+
 
 class Coins(models.Model):
     ticker = models.CharField(max_length=10, unique=True)
@@ -11,9 +13,10 @@ class Coins(models.Model):
     website = models.CharField(max_length=30)
     current_price = models.DecimalField(decimal_places=3, max_digits=12)
     gain_loss = models.DecimalField(decimal_places=3, max_digits=12)
-    
+
     def __str__(self):
         return self.ticker
+
 
 class Tweets(models.Model):
     ticker = models.ForeignKey(Coins, on_delete=models.CASCADE)
@@ -24,14 +27,15 @@ class Tweets(models.Model):
     def __str__(self):
         return self.ticker
 
+
 class Old_Prices(models.Model):
     timestamp = models.DateTimeField()
-    ticker = models.ForeignKey(Coins, on_delete=models.PROTECT) #don't cascade on delete, still important
+    ticker = models.ForeignKey(Coins, on_delete=models.PROTECT)  # don't cascade on delete, still important
     accuracy_projection = models.DecimalField(decimal_places=2, max_digits=12)
     price = models.DecimalField(decimal_places=3, max_digits=12)
 
     class Meta:
-        #Our "primary" key for old_prices
+        # Our "primary" key for old_prices
         unique_together = (('ticker', 'timestamp'),)
 
     def __str__(self):
