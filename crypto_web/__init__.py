@@ -1,2 +1,3 @@
 import DataStream as ds
-ds.StartStream()
+#ds.StartStream()
+#ds.StartTwitterStream()

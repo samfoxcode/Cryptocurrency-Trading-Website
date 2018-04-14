@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from home.models import Coins
-def index(request):   
+from home.models import Coins, Tweets
+
+def index(request):
     return render(request, 'home/index.html')
 
 def about(request):

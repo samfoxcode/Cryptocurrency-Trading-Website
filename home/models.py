@@ -16,10 +16,14 @@ class Coins(models.Model):
         return self.ticker
 
 class Tweets(models.Model):
-    ticker = models.ForeignKey(Coins, on_delete=models.CASCADE)
+    ticker = models.CharField(max_length=10)
     text = models.CharField(max_length=50)
     sentiment = models.DecimalField(decimal_places=2, max_digits=12)
     current_price = models.DecimalField(decimal_places=2, null=False, max_digits=12)
+    timestamp = models.DateTimeField()
+    class Meta:
+        #Our "primary" key for tweets
+        unique_together = (('ticker', 'timestamp'),)
 
     def __str__(self):
         return self.ticker
