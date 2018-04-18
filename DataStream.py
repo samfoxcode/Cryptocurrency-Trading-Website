@@ -13,12 +13,7 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler 
 from tweepy import Stream
 
-'''
-access_token = '2972577814-DNMTzS4p9gLP1cM5dnwPnIJHGId4f8lg9Ucp1Zc'
-access_token_secret = 'WakP1ljIXyN0BSnynjGuj27UCGSGugCxCC4A4pLEFxUfi'
-consumer_key = 'yns3X9kcapLv3hgzMBxJRCtSE'
-consumer_secret = 'INvcXH12aQ1Tbv33rsI4mrumY65A5C5uXOMeyQVWdffIuRTWlW'
-'''
+
 
 def DataStream():
     while(True):
