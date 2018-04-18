@@ -13,9 +13,10 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler 
 from tweepy import Stream
 
-
-
-
+access_token = ''
+access_token_secret = ''
+consumer_key = ''
+consumer_secret = ''
 
 def DataStream():
     while(True):

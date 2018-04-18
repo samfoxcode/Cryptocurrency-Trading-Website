@@ -44,6 +44,8 @@ def register(request):
                         user.save()
                         profile = pform.save(commit = False)
                         profile.user = user
+                        profile.firstname = pform.data['firstname']
+                        profile.lastname = pform.data['lastname']
                         profile.save()
                         #save_file(request.FILES['picture'])
                         registered = True
