@@ -5,8 +5,20 @@ import threading
 import json
 import requests
 import sys
+import json
+from django.utils import timezone
 
-from home.models import Old_Prices, Coins
+from home.models import Old_Prices, Coins, Tweets
+from tweepy.streaming import StreamListener
+from tweepy import OAuthHandler 
+from tweepy import Stream
+
+'''
+access_token = '2972577814-DNMTzS4p9gLP1cM5dnwPnIJHGId4f8lg9Ucp1Zc'
+access_token_secret = 'WakP1ljIXyN0BSnynjGuj27UCGSGugCxCC4A4pLEFxUfi'
+consumer_key = 'yns3X9kcapLv3hgzMBxJRCtSE'
+consumer_secret = 'INvcXH12aQ1Tbv33rsI4mrumY65A5C5uXOMeyQVWdffIuRTWlW'
+'''
 
 def DataStream():
     while(True):
@@ -46,3 +58,28 @@ def StartStream():
     # Create a thread to run the data stream
     t1.start()
     
+#This is a basic listener that just prints received tweets to stdout.
+class ToFileListener(StreamListener):
+    def on_data(self, data):
+        datajson = json.loads(data)
+        print(datajson["text"]) #for visualization
+        tweets = Tweets(ticker = "NAN", text=datajson["text"], sentiment = 0, current_price = 0, timestamp=timezone.localtime())
+        tweets.save()
+
+    def on_error(self, status):
+        print(status)
+
+def tweet_streaming():
+    #This handles Twitter authetification and the connection to Twitter Streaming API
+    l = ToFileListener()
+    auth = OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    stream = Stream(auth, l)
+
+    #filter Twitter Streams to capture data by the keywords
+    stream.filter(track=['bitcoin'])#locations=[-80,40,-77,41.5])
+
+t2 = threading.Thread(target=tweet_streaming)
+
+def StartTwitterStream():
+    t2.start()
