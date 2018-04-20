@@ -9,7 +9,7 @@ django.setup()
 from django.contrib.auth.models import User
 class UserProfile(models.Model):
         # This field is required.
-        user = models.OneToOneField(User, on_delete=models.PROTECT)
+        user = models.OneToOneField(User, on_delete=models.CASCADE)
         # These fields are optional
         website = models.URLField(blank=True)
         picture = models.ImageField(upload_to='imgs', blank=True)

@@ -72,7 +72,8 @@
     <br>
     <div class="container-fluid">
         {% if registered %}
-        <A href="/home/" style="color: rgb(255, 255, 255)">PHF-PHF</A> says: thank you for registering. {% else %}
+        <input type="button" class="btn btn-warning" onClick="parent.location='/account/account'" value="thank you for registering." style="float: right;">
+        {% else %}
         <FORM class="well form-horizontal" id="user_form" method="post" action="/home/register/" enctype="multipart/form-data">
             {% csrf_token %} {{ uform.as_p }} {{ pform.as_p }}
             <INPUT type="submit" name="submit" value="submit" class="btn btn-warning"/>
