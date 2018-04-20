@@ -6,8 +6,12 @@
           <option name="url" value="https://github.com/samf1596/OurTeamName431.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/ashraydimri/Nvstrr.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="C:\projectsO" />
+    <option name="cloneParentDir" value="C:\projects" />
   </component>
 </application>
