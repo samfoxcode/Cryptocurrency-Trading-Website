@@ -1,0 +1,17 @@
+
+
+{% block content %}
+  <h2>Login</h2>
+    {% if message %}
+        <div>
+            {{message}}
+        </div>
+    {% endif %}
+
+  <form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <input name = "username" type = "text"/>
+    <input name = "password" type = "password"/>
+    <button type="submit">Login</button>
+  </form>
+{% endblock %}
