@@ -55,12 +55,12 @@ def register(request):
                         pw = user.password
                         # thus we need to use set password to encrypt the password string
                         user.set_password(pw)
-                        user.save()
                         profile = pform.save(commit = False)
                         profile.user = user
-                        profile.firstname = pform.data['firstname']
-                        profile.lastname = pform.data['lastname']
+                        user.firstname = pform.data['firstname']
+                        user.lastname = pform.data['lastname']
                         profile.save()
+                        user.save()
                         #save_file(request.FILES['picture'])
                         registered = True
                 else:
