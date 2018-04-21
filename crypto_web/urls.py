@@ -22,5 +22,5 @@ urlpatterns = [
     path('', hviews.index, name='index'),
     path('home/', include('home.urls')),
     path('account/', include('account.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls,name='admin'),
 ]

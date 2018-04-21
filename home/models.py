@@ -9,11 +9,12 @@ django.setup()
 from django.contrib.auth.models import User
 class UserProfile(models.Model):
         # This field is required.
-        user = models.OneToOneField(User, on_delete=models.PROTECT)
+        user = models.OneToOneField(User, on_delete=models.CASCADE)
         # These fields are optional
         website = models.URLField(blank=True)
         picture = models.ImageField(upload_to='imgs', blank=True)
-
+        firstname = models.CharField(max_length=10)
+        lastname = models.CharField(max_length=10)
         def __unicode__(self):
                 return self.user.username
 
@@ -26,6 +27,25 @@ class Coins(models.Model):
     
     def __str__(self):
         return self.ticker
+
+class UserTransactions(models.Model):
+    username = models.CharField(max_length=55)
+    ticker = models.CharField(max_length=30)
+    amount = models.DecimalField(decimal_places=3, max_digits=12)
+    
+    class Meta:
+        #Our "primary" key for tweets
+        unique_together = (('username', 'ticker'),)
+
+    def __str__(self):
+        return self.username
+
+class UserBalance(models.Model):
+    username = models.CharField(max_length=55, unique=True)
+    balance = models.DecimalField(decimal_places=3, max_digits=12)
+
+    def __str__(self):
+        return self.username
 
 class Tweets(models.Model):
     ticker = models.CharField(max_length=10)
@@ -61,4 +81,4 @@ class UserForm(ModelForm):
 class UserProfileForm(ModelForm):
         class Meta:
                 model = UserProfile
-                fields = ['website','picture']
+                fields = ['firstname', 'lastname', 'website','picture']
