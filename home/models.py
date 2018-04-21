@@ -1,18 +1,21 @@
 from django.db import models
 from django.forms import ModelForm
-
 import os
 import django
 import crypto_web
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crypto_web.settings")
 django.setup()
 from django.contrib.auth.models import User
+from django import forms
 class UserProfile(models.Model):
         # This field is required.
         user = models.OneToOneField(User, on_delete=models.CASCADE)
         # These fields are optional
         website = models.URLField(blank=True)
         picture = models.ImageField(upload_to='imgs', blank=True)
+        creditcard = models.IntegerField(max_length=16)
+        month =  models.IntegerField(max_length=4)
+        CV = models.IntegerField(max_length=3)
         firstname = models.CharField(max_length=10)
         lastname = models.CharField(max_length=10)
         def __unicode__(self):
@@ -55,11 +58,16 @@ class Old_Prices(models.Model):
         return (self.timestamp, self.ticker)
 
 class UserForm(ModelForm):
-        class Meta:
-                model = User
-                fields = ["username", "email", "password"]
-
+    class Meta:
+        password = forms.CharField(widget=forms.PasswordInput)
+        model = User
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
+        fields = ["username", "first_name", "last_name", "email", "password"]
+                
+            
 class UserProfileForm(ModelForm):
         class Meta:
                 model = UserProfile
-                fields = ['firstname', 'lastname', 'website','picture']
+                fields = ['creditcard','month','CV','website','picture']
