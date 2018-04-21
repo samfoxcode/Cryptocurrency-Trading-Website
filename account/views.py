@@ -44,12 +44,11 @@ def buy(request):
         buy_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
         transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": buy_amount})
-        curr_amount = created
         if created:
-            pass # means new transaction, so amount set
+            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount), "ticker": ticker}})
         else:
             curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
             print(curr_amount)
             UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(buy_amount)+float(curr_amount.amount))
 
-    return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount)+float(curr_amount.amount), "ticker": ticker}})
+            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount)+float(curr_amount.amount), "ticker": ticker}})
