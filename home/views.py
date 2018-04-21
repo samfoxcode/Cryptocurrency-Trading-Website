@@ -21,7 +21,7 @@ def signin(request):
 def contact(request):
     return render(request, 'home/contact.html')
 
-def search(request):
+def index_search(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
         status = Coins.objects.filter(coin_name=search_query)

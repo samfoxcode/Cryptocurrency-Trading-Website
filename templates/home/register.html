@@ -64,20 +64,45 @@
     <title>
         REGISTER
     </title>
-    <div class="container-fluid text-center">
-        <h4 style="color: rgb(255, 255, 255)">Hello there! Please register here!</h4>
+    </style>
+    <div class="col-sm-10">
+        <br>
+        <div class="dropdown">
+            <style>
+                .glyphicon-menu-hamburger {
+                    font-size: 20px;
+                }
+            </style>
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="/home/index">home</a>
+                </li>
+                <li>
+                    <a href="/home/contact">contact</a>
+                </li>
+                <li>
+                    <a href="/home/about">about</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </head>
 
 <BODY style="background-color:#1d8ad3">
+    <div class="container-fluid text-center">
+        <h2 style="color: rgb(255, 255, 255); float: left;">Hello there! Please register here!</h2>
+    </div>
     <br>
     <div class="container-fluid">
         {% if registered %}
-        <input type="button" class="btn btn-warning" onClick="parent.location='/account/account'" value="thank you for registering." style="float: right;">
-        {% else %}
+        <input type="button" class="btn btn-warning" onClick="parent.location='/account/account'" value="thank you for registering, please click here to now sign in"
+            style="float: center;"> {% else %}
         <FORM class="well form-horizontal" id="user_form" method="post" action="/home/register/" enctype="multipart/form-data">
             {% csrf_token %} {{ uform.as_p }} {{ pform.as_p }}
-            <INPUT type="submit" name="submit" value="submit" class="btn btn-warning"/>
+            <INPUT type="submit" name="submit" value="submit" class="btn btn-warning" />
         </FORM>
         {% endif %}
     </div>
