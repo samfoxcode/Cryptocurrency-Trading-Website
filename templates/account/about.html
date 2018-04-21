@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>
+        ABOUT PHFEASANT PHFINANCIAL
+    </title>
+    <div class="container-fluid" style="min-height:95%; ">
+        <div class="row">
+            <div class="col-sm-10">
+                <br>
+                <div class="dropdown">
+                    <style>
+                        .glyphicon-menu-hamburger {
+                            font-size: 20px;
+                        }
+                    </style>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/account/signedinhome">home</a>
+                        </li>
+                        <li>
+                            <a href="/account/account">account</a>
+                        </li>
+                        <li>
+                            <a href="/account/contact">contact</a>
+                        </li>
+                        <li>
+                            <a href="/account/about">about</a>
+                        </li>
+                    </ul>
+                </div>
+                <style>
+                    .header {
+                        margin-left: auto;
+                        margin-right: auto;
+                        text-align: center;
+                    }
+                </style>
+                <div class="header">
+                    <h2 class="container-fluid">About Us</h2>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</head>
+
+<body class="body" style="background-color:#c6e8ff">
+
+    <br>
+    <div>
+        <center>
+            <h5> This website was created with the intention of building a platform where anyone can trade cryptocurrencies but
+                in a social way. As time goes on this site will be expanding and growing so that we can continually support
+                more people and more trading.
+            </h5>
+        </center>
+    </div>
+    <div class='container-fluid'>
+        <br>
+        <br> {% block content %} {% endblock %}
+    </div>
+    <br>
+    <br>
+    <div class="container-fluid text-center">
+        <h3>SERVICES</h3>
+        <br>
+        <div class="row">
+            <div class="col-sm-4">
+                <h4>TRADING</h4>
+                <p>as many coins supported as possible</p>
+            </div>
+            <div class="col-sm-4">
+                <h4>INTELLIGENCE</h4>
+                <p>trading smart</p>
+            </div>
+            <div class="col-sm-4">
+                <h4>SECURITY</h4>
+                <p>your info, secure</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <style>
+        .footer {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 1rem;
+            background-color: #3a3e44;
+            text-align: center;
+        }
+    </style>
+    <footer class="footer">
+        <div class='container-fluid'>
+            <p>
+                <a href="/account/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
+            </p>
+            <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
