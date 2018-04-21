@@ -52,3 +52,9 @@ def buy(request):
             UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(buy_amount)+float(curr_amount.amount))
 
             return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount)+float(curr_amount.amount), "ticker": ticker}})
+
+def load_info(request):
+    if request.method == 'GET':
+        username = request.user.username
+        holdings = UserTransactions.objects.filter(username=username)
+        return render(request, 'account/user.html', {"holdings": holdings})
