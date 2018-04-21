@@ -31,6 +31,25 @@ class Coins(models.Model):
     def __str__(self):
         return self.ticker
 
+class UserTransactions(models.Model):
+    username = models.CharField(max_length=55)
+    ticker = models.CharField(max_length=30)
+    amount = models.DecimalField(decimal_places=3, max_digits=12)
+    
+    class Meta:
+        #Our "primary" key for tweets
+        unique_together = (('username', 'ticker'),)
+
+    def __str__(self):
+        return self.username
+
+class UserBalance(models.Model):
+    username = models.CharField(max_length=55, unique=True)
+    balance = models.DecimalField(decimal_places=3, max_digits=12)
+
+    def __str__(self):
+        return self.username
+
 class Tweets(models.Model):
     ticker = models.CharField(max_length=10)
     text = models.CharField(max_length=50)
