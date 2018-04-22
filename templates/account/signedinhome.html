@@ -128,9 +128,20 @@
                         <a href="/account/signedinhome" style="color: rgb(255, 255, 255)">Litcoin</a>
                     </li>
                 </ul>
+                <style>
+                    .sell_btn {
+                        background: rgb(255, 0, 0);
+                        /* use your color here */
+                    }
+                    .buy_btn {
+                        background: rgb(0, 150, 25);
+                        /* use your color here */
+                    }
+                </style>
                 <form type="post" method="post" action="{%url 'buy' %}" style="margin: 0">{% csrf_token %}
-                    <button id="buy_submit" class="btn btn-primary btn-sm" type="submit" style="float: right;">Buy</button>
-                    <input id="buy_box" type="text" name="buy_box" placeholder="Amount to buy..." style="float: right;">
+                    <button id="sell_submit" class="sell_btn btn-primary btn-sm" type="submit" style="float: right;" formaction="{%url 'sell' %}">Sell</button>
+                    <button id="buy_submit" class="buy_btn btn-primary btn-sm" type="submit" style="float: right;">Buy</button>
+                    <input id="buy_box" type="text" name="buy_box" placeholder="Amount to buy/sell..." style="float: right;">
                     <input id="ticker_box" type="text" name="ticker_box" placeholder="Ticker of Coin..." style="float: right;">
                 </form>
             </div>
@@ -151,7 +162,7 @@
                         <h5 style="color: rgb(255, 255, 255)">${{coin.current_price}}</h5>
                         <a href={{coin.website}} style="color: rgb(255, 255, 255)">{{coin.website}}</a>
                         {% endfor %} {% endif %}
-                </center>
+                    </center>
                 </div>
                 <div class="well bs-sidebar" id="sidebar" style="background-color:#005f9e">
                     <center>
@@ -159,7 +170,7 @@
                         <h5 style="color: rgb(255, 255, 255)">Congrats! You own {{curr_amounts.amount}}</h5>
                         <h5 style="color: rgb(255, 255, 255)"> of {{curr_amounts.ticker}} now</h5>
                         {% endif %}
-                </center>
+                    </center>
                 </div>
             </center>
         </div>

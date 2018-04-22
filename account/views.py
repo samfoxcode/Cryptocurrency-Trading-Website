@@ -58,3 +58,18 @@ def load_info(request):
         username = request.user
         holdings = UserTransactions.objects.filter(username=username)
         return render(request, 'account/user.html', {"holdings": holdings})
+
+def sell(request):
+    if request.method == 'POST':
+        print("hi")
+        username = request.user
+        sell_amount = request.POST.get('buy_box', "")
+        ticker = request.POST.get('ticker_box', "")
+        transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": sell_amount})
+        if created:
+                return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(sell_amount), "ticker":ticker}})
+        else:
+            curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
+            print(curr_amount)
+            UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
+            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
