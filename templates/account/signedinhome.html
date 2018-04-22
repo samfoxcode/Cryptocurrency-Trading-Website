@@ -128,11 +128,6 @@
                         <a href="/account/signedinhome" style="color: rgb(255, 255, 255)">Litcoin</a>
                     </li>
                 </ul>
-<<<<<<< HEAD
-                <form id="buysell" type="post" method="post" style="margin: 0">{% csrf_token %}
-					<button id="sell_submit" class="btn btn-primary btn-sm" type="submit" style="float: right;" formaction="{%url 'sell' %}">Sell</button>
-                    <button id="buy_submit" class="btn btn-primary btn-sm" type="submit" style="float: right;" formaction="{%url 'buy' %}">Buy</button>
-=======
                 <style>
                     .sell_btn {
                         background: rgb(255, 0, 0);
@@ -146,7 +141,6 @@
                 <form type="post" method="post" action="{%url 'buy' %}" style="margin: 0">{% csrf_token %}
                     <button id="sell_submit" class="sell_btn btn-primary btn-sm" type="submit" style="float: right;" formaction="{%url 'sell' %}">Sell</button>
                     <button id="buy_submit" class="buy_btn btn-primary btn-sm" type="submit" style="float: right;">Buy</button>
->>>>>>> sams_workingbranch
                     <input id="buy_box" type="text" name="buy_box" placeholder="Amount to buy/sell..." style="float: right;">
                     <input id="ticker_box" type="text" name="ticker_box" placeholder="Ticker of Coin..." style="float: right;">
                 </form>
