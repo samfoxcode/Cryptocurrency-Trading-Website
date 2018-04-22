@@ -29,7 +29,8 @@ class Coins(models.Model):
         return self.ticker
 
 class UserTransactions(models.Model):
-    username = models.CharField(max_length=55)
+    username = models.ForeignKey(User, on_delete=models.CASCADE) #don't cascade on delete, still important
+    #username = models.CharField(max_length=55)
     ticker = models.CharField(max_length=30)
     amount = models.DecimalField(decimal_places=3, max_digits=12)
     
@@ -37,15 +38,15 @@ class UserTransactions(models.Model):
         #Our "primary" key for tweets
         unique_together = (('username', 'ticker'),)
 
-    def __str__(self):
-        return self.username
+    def __unicode__(self):
+        return self.username.username
 
 class UserBalance(models.Model):
-    username = models.CharField(max_length=55, unique=True)
+    username = models.OneToOneField(User, on_delete=models.CASCADE) #don't cascade on delete, still important
     balance = models.DecimalField(decimal_places=3, max_digits=12)
 
-    def __str__(self):
-        return self.username
+    def __unicode__(self):
+        return self.username.username
 
 class Tweets(models.Model):
     ticker = models.CharField(max_length=10)
