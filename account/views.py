@@ -40,7 +40,7 @@ def buy(request):
     curr_amount = 0
     if request.method == 'POST':
         print("hit")
-        username = request.user.username
+        username = request.user
         buy_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
         transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": buy_amount})
@@ -57,7 +57,7 @@ def buy(request):
 def sell(request):
     if request.method == 'POST':
         print("hi")
-        username = request.user.username
+        username = request.user
         sell_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
         transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": sell_amount})

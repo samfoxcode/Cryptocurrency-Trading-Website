@@ -1,21 +1,18 @@
 from django.db import models
 from django.forms import ModelForm
+
 import os
 import django
 import crypto_web
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crypto_web.settings")
 django.setup()
 from django.contrib.auth.models import User
-from django import forms
 class UserProfile(models.Model):
         # This field is required.
         user = models.OneToOneField(User, on_delete=models.CASCADE)
         # These fields are optional
         website = models.URLField(blank=True)
         picture = models.ImageField(upload_to='imgs', blank=True)
-        creditcard = models.IntegerField(max_length=16)
-        month =  models.IntegerField(max_length=4)
-        CV = models.IntegerField(max_length=3)
         firstname = models.CharField(max_length=10)
         lastname = models.CharField(max_length=10)
         def __unicode__(self):
@@ -32,7 +29,8 @@ class Coins(models.Model):
         return self.ticker
 
 class UserTransactions(models.Model):
-    username = models.CharField(max_length=55)
+    username = models.ForeignKey(User, on_delete=models.CASCADE) #don't cascade on delete, still important
+    #username = models.CharField(max_length=55)
     ticker = models.CharField(max_length=30)
     amount = models.DecimalField(decimal_places=3, max_digits=12)
     
@@ -40,15 +38,15 @@ class UserTransactions(models.Model):
         #Our "primary" key for tweets
         unique_together = (('username', 'ticker'),)
 
-    def __str__(self):
-        return self.username
+    def __unicode__(self):
+        return self.username.username
 
 class UserBalance(models.Model):
-    username = models.CharField(max_length=55, unique=True)
+    username = models.OneToOneField(User, on_delete=models.CASCADE) #don't cascade on delete, still important
     balance = models.DecimalField(decimal_places=3, max_digits=12)
 
-    def __str__(self):
-        return self.username
+    def __unicode__(self):
+        return self.username.username
 
 class Tweets(models.Model):
     ticker = models.CharField(max_length=10)
@@ -77,16 +75,11 @@ class Old_Prices(models.Model):
         return (self.timestamp, self.ticker)
 
 class UserForm(ModelForm):
-    class Meta:
-        password = forms.CharField(widget=forms.PasswordInput)
-        model = User
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
-        fields = ["username", "first_name", "last_name", "email", "password"]
-                
-            
+        class Meta:
+                model = User
+                fields = ["username", "email", "password"]
+
 class UserProfileForm(ModelForm):
         class Meta:
                 model = UserProfile
-                fields = ['creditcard','month','CV','website','picture']
+                fields = ['firstname', 'lastname', 'website','picture']
