@@ -40,7 +40,7 @@ def buy(request):
     curr_amount = 0
     if request.method == 'POST':
         print("hit")
-        username = request.user.username
+        username = request.user
         buy_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
         transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": buy_amount})
@@ -55,6 +55,6 @@ def buy(request):
 
 def load_info(request):
     if request.method == 'GET':
-        username = request.user.username
+        username = request.user
         holdings = UserTransactions.objects.filter(username=username)
         return render(request, 'account/user.html', {"holdings": holdings})
