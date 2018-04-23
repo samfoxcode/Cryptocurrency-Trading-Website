@@ -53,14 +53,12 @@ def buy(request):
 
             return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount)+float(curr_amount.amount), "ticker": ticker}})
 
-<<<<<<< HEAD
-=======
+
 def load_info(request):
     if request.method == 'GET':
         username = request.user
         holdings = UserTransactions.objects.filter(username=username)
         return render(request, 'account/user.html', {"holdings": holdings})
->>>>>>> sams_workingbranch
 
 def sell(request):
     if request.method == 'POST':
@@ -75,8 +73,7 @@ def sell(request):
             curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
             print(curr_amount)
             UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
-<<<<<<< HEAD
+            
             return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
-=======
-            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
->>>>>>> sams_workingbranch
+
+
