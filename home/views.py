@@ -57,8 +57,6 @@ def register(request):
                         user.set_password(pw)
                         profile = pform.save(commit = False)
                         profile.user = user
-                        user.firstname = pform.data['firstname']
-                        user.lastname = pform.data['lastname']
                         profile.save()
                         user.save()
                         #save_file(request.FILES['picture'])
