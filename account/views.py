@@ -61,6 +61,7 @@ def load_info(request):
 
 def sell(request):
     if request.method == 'POST':
+        '''
         print("hi")
         username = request.user
         sell_amount = request.POST.get('buy_box', "")
@@ -69,7 +70,19 @@ def sell(request):
         if created:
                 return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(sell_amount), "ticker":ticker}})
         else:
-            curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
-            print(curr_amount)
+        '''
+        username = request.user
+        sell_amount = request.POST.get('buy_box', "")
+        ticker = request.POST.get('ticker_box', "")
+        if(UserTransactions.objects.filter(username=username, ticker=ticker).count()<=0):
+            return render(request, 'account/signedinhome.html', {"do_not_own": {"ticker": ticker}})
+
+        curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
+        print(curr_amount)
+        if(float(curr_amount.amount)-float(sell_amount) < 0):
+            sell_amount = float(curr_amount.amount) # will result in selling all
             UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
-            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
+            return render(request, 'account/signedinhome.html', {"sold_all": {"ticker": ticker}})
+
+        UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
+        return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
