@@ -93,25 +93,72 @@
     </div>
     <br>
     <br>
+    <hr>
+    {% load staticfiles %}
+    <div id="portfolio" class="container-fluid bg-white">
+            <div class="container-fluid text-center"><h2>The Team</h2></div> 
+    <div class="row text-center slideanim">
+    <div class="col-sm-4">
+    <h4>Sam Fox</h4> 
+    <h5>Full Stack Engineer</h5>
+    <img src="{% static 'home/sam.png' %}"alt="sam" style="width:210px;height:210px;">
+    </div>
+    <div class="col-sm-4">
+    <h4>Rikesh Sharma</h4>
+    <h5>Full Stack Engineer</h5>
+    <img src="{% static 'home/ricky.png' %}" alt="ricky" style="width:210px;height:210px;"> 
+    </div>
+    <div class="col-sm-4">
+    <h4>Marc Gehman</h4> 
+    <h5>Backend Engineer</h5>
+    <img src="{% static 'home/marc.png' %}"alt="marc" style="width:210px;height:210px;">
+    </div>
+    <div class="col-sm-4">
+    <h4>Shumeng Zhong</h4> 
+    <h5>Database Administrator</h5>
+    <img src="{% static 'home/shumeng.png' %}"alt="shumeng" style="width:210px;height:210px;">
+    </div>
+    <div class="col-sm-4">
+    <h4>Gerard Pugliese</h4> 
+    <h5>Frontend Engineer</h5>
+    <img src="{% static 'home/gerard.png' %}"alt="gerard" style="width:210px;height:210px;">
+    </div>
+    </div>
+    </div>
+    <div></div>
     <style>
-        .footer {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            padding: 1rem;
-            background-color: #3a3e44;
-            text-align: center;
+        * {
+            margin: 0;
+        }
+
+
+        .wrapper {
+            min-height: 5%;
+            height: auto !important;
+            height: 5%;
+            margin: 0 auto -20px;
+            background-color: #1b303f;
+            /* the bottom margin is the negative value of the footer's height */
+        }
+
+        .footer,
+        .push {
+            height: 20px;
+            /* .push must be the same height as .footer */
         }
     </style>
-    <footer class="footer">
-        <div class='container-fluid'>
-            <p>
-                <a href="/account/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
-            </p>
-            <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
-        </div>
-    </footer>
+    <div class="wrapper">
+        <footer class="container-fluid text-center">
+            <div class='container-fluid'>
+                <p>
+                    <a href="/account/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
+                </p>
+                <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
+            </div>
+        </footer>
+        <div class="push"></div>
+    </div>
+    <div class="footer"></div>
 
 </body>
 
