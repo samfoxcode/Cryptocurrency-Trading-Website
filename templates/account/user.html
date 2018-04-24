@@ -69,7 +69,7 @@
                             <div class="col-sm-3">
                                 <div class="well">
                                     <h4>Balance</h4>
-                                    <p>info</p>
+                                    <p>{{account.account_balance}}</p>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -106,8 +106,15 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <div class="well">
-                                    <p>Thank you for being a part of PHF-PHF</p>
+                                <div class="well">                    
+                                        <form type="post" method="post" action="{%url 'transfer_money' %}" style="margin: 0">{% csrf_token %}
+                                        <input id="transfer_box" type="text" name="transfer_box" placeholder="Amount to Transfer">
+                                        <button id="transfer_submit" type="submit">Transfer</button>
+                                        </form>
+                                        {% if amount %}
+                                        <h5 style="color: rgb(255, 255, 255)">Transfer Complete!</h5>
+                                        <h5 style="color: rgb(255, 255, 255)"> Account Balance: {{account.account_balance}}</h5>
+                                        {% endif %}
                                 </div>
                             </div>
                         </div>

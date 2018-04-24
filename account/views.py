@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
-from home.models import Coins, Tweets, UserTransactions, UserBalance
+from home.models import Coins, Tweets, UserTransactions, UserBalance,UserAccount
 
 def account(request):
     if not request.user.is_authenticated:    
@@ -53,7 +53,6 @@ def buy(request):
 
             return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount)+float(curr_amount.amount), "ticker": ticker}})
 
-
 def load_info(request):
     if request.method == 'GET':
         username = request.user
@@ -62,6 +61,7 @@ def load_info(request):
 
 def sell(request):
     if request.method == 'POST':
+        '''
         print("hi")
         username = request.user
         sell_amount = request.POST.get('buy_box', "")
@@ -70,10 +70,35 @@ def sell(request):
         if created:
                 return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(sell_amount), "ticker":ticker}})
         else:
-            curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
-            print(curr_amount)
+        '''
+        username = request.user
+        sell_amount = request.POST.get('buy_box', "")
+        ticker = request.POST.get('ticker_box', "")
+        if(UserTransactions.objects.filter(username=username, ticker=ticker).count()<=0):
+            return render(request, 'account/signedinhome.html', {"do_not_own": {"ticker": ticker}})
+
+        curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
+        print(curr_amount)
+        if(float(curr_amount.amount)-float(sell_amount) < 0):
+            sell_amount = float(curr_amount.amount) # will result in selling all
             UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
-            
-            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
+            return render(request, 'account/signedinhome.html', {"sold_all": {"ticker": ticker}})
 
+        UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
+        return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
 
+def transfer_money(request):
+    balance = 0
+    if request.method == 'POST':
+        username = request.user
+        transfer_amount = request.POST.get('transfer_box', "")
+        #cvv= request.POST.get('cvv_box',"")
+        #exp_data = request.POST.get('expdata_box',"") 
+        created = UserAccount.objects.get_or_create(username=username,defaults={"account_balance": balance})
+        if created:
+            return render(request, 'account/user.html', {"account": {"account_balance": float(balance)}})
+        else:       
+            account = UserAccount.objects.get(username=username)
+            print(account)
+            UserAccount.objects.filter(username=username).update(account_balance=float(transfer_amount)+float(account.account_balance))
+            return render(request,'account/user.html', {"account": {"account_balance": float(transfer_amount)+float(account.account_balance)}})
