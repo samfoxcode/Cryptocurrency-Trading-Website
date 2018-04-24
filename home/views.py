@@ -9,6 +9,19 @@ from django.shortcuts import render_to_response
 from crypto_web.settings import MEDIA_ROOT
 from django.template import RequestContext
 from django.urls import reverse
+import json
+from django.http import JsonResponse
+
+def autocomplete(request):
+    if request.is_ajax():
+        queryset = Coins.objects.filter(coin_name__startswith=request.GET.get('search', None))
+        mylist = []        
+        for i in queryset:
+            mylist.append(i.coin_name)
+        data = {"mylist":mylist}
+        print(data)
+        return JsonResponse(data)
+
 def index(request):
     return render(request, 'home/index.html')
 

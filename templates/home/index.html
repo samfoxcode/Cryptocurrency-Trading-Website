@@ -9,6 +9,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#search_box").on('keyup', function () {
+                var value = $(this).val();
+                $.ajax({
+                    url: "{% url 'autocomplete' %}",
+                    data: {
+                        'search': value
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        list = data.mylist;
+                        $("#search_box").autocomplete({
+                            appendTo: "#search_div",
+                            source: list,
+                            minLength: 1
+                        });
+                    }
+                });
+            });
+        });
+    </script>
     <style>
         .slideanim {
             visibility: hidden;
@@ -138,8 +160,10 @@
             <center>
                 <div>
                     <form type="get" action="{%url 'index_search' %}" style="margin: 0">{% csrf_token %}
+                            <div class="ui-widget">
                         <input id="search_box" type="text" name="search_box" placeholder="Search...">
                         <button id="search_submit" type="submit">onward</button>
+                        </div>
                     </form>
                 </div>
                 <br>
