@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
-from home.models import Coins, Tweets, UserTransactions, UserBalance
+from home.models import Coins, Tweets, UserTransactions, UserBalance, UserProfile
 
 def account(request):
     if not request.user.is_authenticated:    
@@ -57,9 +57,10 @@ def load_info(request):
     if request.method == 'GET':
         username = request.user
         holdings = UserTransactions.objects.filter(username=username)
-        balance = UserBalance.objects.get(username=username)
+        balance, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": 0})
+        user, created2 = UserProfile.objects.get_or_create(user=username)
         print(balance.balance)
-        return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance}})
+        return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance, "user":user.creditcard%10000}})
 
 def sell(request):
     if request.method == 'POST':
@@ -93,10 +94,14 @@ def update_balance(request):
     if request.method == "POST":
         username = request.user
         balance = request.POST.get('balance_box', "")
+        user, created2 = UserProfile.objects.get_or_create(user=username)
+        holdings = UserTransactions.objects.filter(username=username)
         transaction, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": balance})
         if created:
-            return render(request, 'account/user.html', {"balances": {"balance":float(balance)}})
+            balance = UserBalance.objects.get(username=username)
+            return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance, "user":user.creditcard%10000}})
 
         print(transaction.balance)
         UserBalance.objects.filter(username=username).update(balance=float(balance)+float(transaction.balance))
-        return render(request, 'account/user.html', {"balances": {"balance":float(balance)+float(transaction.balance)}})
+        balance = UserBalance.objects.get(username=username)
+        return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance, "user":user.creditcard%10000}})

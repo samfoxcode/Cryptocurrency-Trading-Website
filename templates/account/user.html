@@ -73,17 +73,18 @@
                                     {% if info %}
                                     <h5 style="color: rgb(0, 0, 0)">Your current balance is {{info.balances.balance}}</h5>
                                     {% endif %}
-                                    {% if balances %}
-                                    <h5 style="color: rgb(0, 0, 0)">Your current balance is now {{balances.balance}}</h5>
-                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
                                     <h4>Holdings</h4>
                                     {% if info %} {% for holding in info.holding %}
+                                    {% if holding.ticker %}
                                     <h5 style="color: rgb(0, 0, 0)">{{holding.ticker}}</h5>
                                     <h8 style="color: rgb(13, 0, 131)">{{holding.amount}}</h8>
+                                    {% else %}
+                                    <h5 style="color: rgb(0, 0, 0)">Currently no holdings</h5>
+                                    {% endif %}
                                     {% endfor %} {% endif %}
                                 </div>
                             </div>
@@ -108,18 +109,20 @@
                             <div class="col-sm-8">
                                 <div class="well">
                                     <h4>Credit Card on file (last 4 numbers)</h4>
-                                    <p>numbers</p>
+                                    {% if info %}
+                                    <p>{{info.user}}</p>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row">
-                            <div class="col-sm-4">
-                                <div class="well">
-                                    <form type="post" method="post" action="{%url 'update_balance' %}">{% csrf_token %}
-                                        <button id="update_balance" class="btn btn-primary btn-sm" type="submit" style="float: right;" formaction="{%url 'update_balance' %}">Update Balance</button>
-                                        <input id="balance_box" type="text" name="balance_box" placeholder="withdraw/deposit amount..." style="float: left;">
-                                    </form>
+                                <div class="col-sm-4">
+                                    <div class="well">
+                                        <form type="post" method="post" action="{%url 'update_balance' %}" style="margin:0;">{% csrf_token %}
+                                            <input id="balance_box" type="number" name="balance_box" style="width: 300px;" placeholder="withdraw/deposit amount...">
+                                            <button id="update_balance" class="btn btn-primary btn-sm" type="submit" formaction="{%url 'update_balance' %}">Update Balance</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
