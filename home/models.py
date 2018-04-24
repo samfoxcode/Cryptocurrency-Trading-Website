@@ -33,7 +33,7 @@ class Coins(models.Model):
         return self.ticker
 
 class UserTransactions(models.Model):
-    username = models.ForeignKey(User, on_delete=models.CASCADE) #don't cascade on delete, still important
+    username = models.ForeignKey(User, on_delete=models.CASCADE) 
     #username = models.CharField(max_length=55)
     ticker = models.CharField(max_length=30)
     amount = models.DecimalField(decimal_places=3, max_digits=12)
@@ -46,7 +46,7 @@ class UserTransactions(models.Model):
         return self.username.username
 
 class UserBalance(models.Model):
-    username = models.OneToOneField(User, on_delete=models.CASCADE) #don't cascade on delete, still important
+    username = models.OneToOneField(User, on_delete=models.CASCADE) 
     balance = models.DecimalField(decimal_places=3, max_digits=12)
 
     def __unicode__(self):

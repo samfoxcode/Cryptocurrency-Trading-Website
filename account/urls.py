@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/',views.logout_view,name = 'logout'),
     path('buy/', views.buy, name='buy'),
     path('sell/', views.sell, name='sell'),
-    path('load_info/', views.load_info, name='load_info')
+    path('load_info/', views.load_info, name='load_info'),
+    path('update_balance/', views.update_balance, name='update_balance')
 ]

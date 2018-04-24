@@ -48,11 +48,12 @@
             <div class="container-fluid">
                 <div class="row content">
                     <div class="col-sm-9">
-                        <input type="button" method='GET' class="btn btn-warning" onClick="parent.location='/account/load_info'" value="Load Account Info" style="float: right;">
+                        <input type="button" method='GET' class="btn btn-warning" onClick="parent.location='/account/load_info'" value="Load Account Info"
+                            style="float: right;">
                     </div>
                     <div class="col-sm-9">
                         <div class="well">
-                            <h1>Hello, {{user.username}}</h1>
+                            <h1>Hello, {{user.first_name}}</h1>
                             {% if message %}
                             <div>
                                 <h4> {{message}}</h4>
@@ -69,13 +70,18 @@
                             <div class="col-sm-3">
                                 <div class="well">
                                     <h4>Balance</h4>
-                                    <p>info</p>
+                                    {% if info %}
+                                    <h5 style="color: rgb(0, 0, 0)">Your current balance is {{info.balances.balance}}</h5>
+                                    {% endif %}
+                                    {% if balances %}
+                                    <h5 style="color: rgb(0, 0, 0)">Your current balance is now {{balances.balance}}</h5>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
                                     <h4>Holdings</h4>
-                                    {% if holdings %} {% for holding in holdings %}
+                                    {% if info %} {% for holding in info.holding %}
                                     <h5 style="color: rgb(0, 0, 0)">{{holding.ticker}}</h5>
                                     <h8 style="color: rgb(13, 0, 131)">{{holding.amount}}</h8>
                                     {% endfor %} {% endif %}
@@ -102,19 +108,25 @@
                             <div class="col-sm-8">
                                 <div class="well">
                                     <h4>Credit Card on file (last 4 numbers)</h4>
-                                    <p>Text</p>
+                                    <p>numbers</p>
                                 </div>
                             </div>
+                            <div class="row">
                             <div class="col-sm-4">
                                 <div class="well">
-                                    <p>Thank you for being a part of PHF-PHF</p>
+                                    <form type="post" method="post" action="{%url 'update_balance' %}">{% csrf_token %}
+                                        <button id="update_balance" class="btn btn-primary btn-sm" type="submit" style="float: right;" formaction="{%url 'update_balance' %}">Update Balance</button>
+                                        <input id="balance_box" type="text" name="balance_box" placeholder="withdraw/deposit amount..." style="float: left;">
+                                    </form>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <br>
     <style>

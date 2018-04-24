@@ -57,7 +57,9 @@ def load_info(request):
     if request.method == 'GET':
         username = request.user
         holdings = UserTransactions.objects.filter(username=username)
-        return render(request, 'account/user.html', {"holdings": holdings})
+        balance = UserBalance.objects.get(username=username)
+        print(balance.balance)
+        return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance}})
 
 def sell(request):
     if request.method == 'POST':
@@ -86,3 +88,15 @@ def sell(request):
 
         UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
         return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
+
+def update_balance(request):
+    if request.method == "POST":
+        username = request.user
+        balance = request.POST.get('balance_box', "")
+        transaction, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": balance})
+        if created:
+            return render(request, 'account/user.html', {"balances": {"balance":float(balance)}})
+
+        print(transaction.balance)
+        UserBalance.objects.filter(username=username).update(balance=float(balance)+float(transaction.balance))
+        return render(request, 'account/user.html', {"balances": {"balance":float(balance)+float(transaction.balance)}})
