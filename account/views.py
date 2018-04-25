@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
-from home.models import Coins, Tweets, UserTransactions, UserBalance, UserProfile
-
+from home.models import Coins, Tweets, UserTransactions, UserBalance, UserProfile, UserTransactions_Time
+from django.core.mail import send_mail
+from django.utils import timezone
+from datetime import datetime
 def account(request):
     if not request.user.is_authenticated:    
         return render(request,"home/login.html",{"message": "Enter username and password"})
@@ -43,14 +45,17 @@ def buy(request):
         username = request.user
         buy_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
+        transact = UserTransactions_Time(username=username, ticker=ticker, amount=buy_amount, timestamp= datetime.now())
+        transact.save()
         transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": buy_amount})
         if created:
+            send_mail('PHF PHF TRANSACTION','You just bought ' + str(buy_amount) + " of " + ticker,'samf1596@gmail.com',['samf1596@gmail.com'],fail_silently=False,)
             return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount), "ticker": ticker}})
         else:
             curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
             print(curr_amount)
             UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(buy_amount)+float(curr_amount.amount))
-
+            send_mail('PHF PHF TRANSACTION','You just bought ' + str(buy_amount) + " of " + ticker,'samf1596@gmail.com',['samf1596@gmail.com'],fail_silently=False,)
             return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(buy_amount)+float(curr_amount.amount), "ticker": ticker}})
 
 def load_info(request):
@@ -59,41 +64,38 @@ def load_info(request):
         holdings = UserTransactions.objects.filter(username=username)
         balance, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": 0})
         user, created2 = UserProfile.objects.get_or_create(user=username)
+        transactions = UserTransactions_Time.objects.filter(username=username).order_by('timestamp')[:5]
         print(balance.balance)
-        return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance, "user":user.creditcard%10000}})
+        return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance, "user":user.creditcard%10000, "transactions":transactions}})
 
 def sell(request):
     if request.method == 'POST':
-        '''
-        print("hi")
         username = request.user
         sell_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
-        transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": sell_amount})
-        if created:
-                return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(sell_amount), "ticker":ticker}})
-        else:
-        '''
-        username = request.user
-        sell_amount = request.POST.get('buy_box', "")
-        ticker = request.POST.get('ticker_box', "")
+        
         if(UserTransactions.objects.filter(username=username, ticker=ticker).count()<=0):
             return render(request, 'account/signedinhome.html', {"do_not_own": {"ticker": ticker}})
 
+        transact = UserTransactions_Time(username=username, ticker=ticker, amount=sell_amount, timestamp= datetime.now())
+        transact.save()
         curr_amount = UserTransactions.objects.get(username=username, ticker=ticker)
         print(curr_amount)
         if(float(curr_amount.amount)-float(sell_amount) < 0):
             sell_amount = float(curr_amount.amount) # will result in selling all
             UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
+            send_mail('PHF PHF TRANSACTION','You just sold all of your ' + str(ticker),'samf1596@gmail.com',['samf1596@gmail.com'],fail_silently=False,)
             return render(request, 'account/signedinhome.html', {"sold_all": {"ticker": ticker}})
 
         UserTransactions.objects.filter(username=username, ticker=ticker).update(amount=float(curr_amount.amount)-float(sell_amount))
+        send_mail('PHF PHF TRANSACTION','You just sold ' + str(sell_amount) + " of " + ticker,'samf1596@gmail.com',['samf1596@gmail.com'],fail_silently=False,)
         return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": float(curr_amount.amount) - float(sell_amount), "ticker": ticker}})
 
 def update_balance(request):
     if request.method == "POST":
         username = request.user
         balance = request.POST.get('balance_box', "")
+        send_mail('PHF PHF TRANSACTION','Thank you for depositing ' + str(balance) + ' into your account!','samf1596@gmail.com',['samf1596@gmail.com'],fail_silently=False,)
         user, created2 = UserProfile.objects.get_or_create(user=username)
         holdings = UserTransactions.objects.filter(username=username)
         transaction, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": balance})

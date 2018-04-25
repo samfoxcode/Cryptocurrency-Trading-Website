@@ -34,13 +34,23 @@ class Coins(models.Model):
 
 class UserTransactions(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE) 
-    #username = models.CharField(max_length=55)
     ticker = models.CharField(max_length=30)
     amount = models.DecimalField(decimal_places=3, max_digits=12)
-    
     class Meta:
         #Our "primary" key for tweets
         unique_together = (('username', 'ticker'),)
+
+    def __unicode__(self):
+        return self.username.username
+
+class UserTransactions_Time(models.Model):
+    username = models.ForeignKey(User, on_delete=models.CASCADE) 
+    ticker = models.CharField(max_length=30)
+    amount = models.DecimalField(decimal_places=3, max_digits=12)
+    timestamp = models.DateTimeField()
+    class Meta:
+        #Our "primary" key for tweets
+        unique_together = (('username', 'ticker', 'timestamp'),)
 
     def __unicode__(self):
         return self.username.username

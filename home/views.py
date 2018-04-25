@@ -11,6 +11,7 @@ from django.template import RequestContext
 from django.urls import reverse
 import json
 from django.http import JsonResponse
+from django.core.mail import send_mail
 
 def autocomplete(request):
     if request.is_ajax():
@@ -38,7 +39,7 @@ def index_search(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
         status = Coins.objects.filter(coin_name=search_query)
-        coins = {"coins": status} #true or false
+        coins = {"coins": status}
         return render(request, 'home/index.html', coins)
         
 def login_view(request):
@@ -80,6 +81,7 @@ def register(request):
                 uform = UserForm()
                 pform = UserProfileForm()
 
+        send_mail('PHF PHF TRANSACTION','Thank you for registering for an account with PHFEASANT PHFINANCIAL!','samf1596@gmail.com',['samf1596@gmail.com'],fail_silently=False,)
         return render(request, 'home/register.html', {'uform': uform, 'pform': pform, 'registered': registered })
 
 

@@ -99,9 +99,10 @@
                             <div class="col-sm-4">
                                 <div class="well">
                                     <h4>Recent Transactions</h4>
-                                    <p>Text</p>
-                                    <p>Text</p>
-                                    <p>Text</p>
+                                    {% if info %} {% for transaction in info.transactions %}
+                                    <h8 style="color: rgb(13, 0, 131)">{{transaction.amount}} of {{transaction.ticker}} on {{transaction.timestamp}}</h8>
+                                    <hr>
+                                    {% endfor %} {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -132,25 +133,40 @@
     </div>
     </div>
     <br>
+    <div></div>
     <style>
-        .footer {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            padding: 1rem;
-            background-color: #3a3e44;
-            text-align: center;
+        * {
+            margin: 0;
+        }
+
+
+        .wrapper {
+            min-height: 5%;
+            height: auto !important;
+            height: 5%;
+            margin: 0 auto -20px;
+            background-color: #1b303f;
+            /* the bottom margin is the negative value of the footer's height */
+        }
+
+        .footer,
+        .push {
+            height: 20px;
+            /* .push must be the same height as .footer */
         }
     </style>
-    <footer class="footer">
-        <div class='container-fluid'>
-            <p>
-                <a href="/account/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
-            </p>
-            <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
-        </div>
-    </footer>
+    <div class="wrapper">
+        <footer class="container-fluid text-center">
+            <div class='container-fluid'>
+                <p>
+                    <a href="/account/about/" title="about" style="color: rgb(255, 255, 255)">about</a>
+                </p>
+                <p style="color: rgb(255, 255, 255)">Copyright &copy; 2018 PHF-PHF</p>
+            </div>
+        </footer>
+        <div class="push"></div>
+    </div>
+    <div class="footer"></div>
 </body>
 
 </html>

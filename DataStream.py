@@ -7,7 +7,6 @@ import requests
 import sys
 import json
 from django.utils import timezone
-
 from home.models import Old_Prices, Coins, Tweets
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler 
