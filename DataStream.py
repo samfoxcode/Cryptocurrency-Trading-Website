@@ -60,7 +60,7 @@ class ToFileListener(StreamListener):
     def on_data(self, data):
         datajson = json.loads(data)
         print(datajson["text"]) #for visualization
-        tweets = Tweets(ticker = "NAN", text=datajson["text"], sentiment = 0, current_price = 0, timestamp=timezone.localtime())
+        tweets = Tweets(ticker = "ETH", text=datajson["text"], sentiment = 0, current_price = 0, timestamp=timezone.localtime())
         tweets.save()
 
     def on_error(self, status):
@@ -74,7 +74,7 @@ def tweet_streaming():
     stream = Stream(auth, l)
 
     #filter Twitter Streams to capture data by the keywords
-    stream.filter(track=['bitcoin'])#locations=[-80,40,-77,41.5])
+    stream.filter(track=['ethereum'])#locations=[-80,40,-77,41.5])
 
 t2 = threading.Thread(target=tweet_streaming)
 

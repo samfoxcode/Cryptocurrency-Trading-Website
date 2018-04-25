@@ -31,7 +31,9 @@ def search(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
         status = Coins.objects.filter(coin_name=search_query)
-        coins = {"coins": status} #true or false
+        ticker = Coins.objects.get(coin_name=search_query)
+        tweets = Tweets.objects.filter(ticker=ticker.ticker).order_by('timestamp')[:5]
+        coins = {'search': {"coins": status, "tweets":tweets}} #true or false
         return render(request, 'account/signedinhome.html', coins)
 
 def logout_view(request):
