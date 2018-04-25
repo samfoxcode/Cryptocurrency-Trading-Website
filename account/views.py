@@ -47,6 +47,20 @@ def buy(request):
         username = request.user
         buy_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
+        status = Coins.objects.filter(ticker=ticker)
+
+        if(status.count() == 0):
+            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": "THAT COIN DOESN'T EXIST!!", "ticker": ticker}})
+
+        status = Coins.objects.get(ticker=ticker)
+        cost = float(status.current_price)*float(buy_amount)
+        balance, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": 0})
+
+        if(float(balance.balance) - cost < 0):
+            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": "INSUFFICIENT FUNDS!! Choose a new amount!", "ticker": ""}})
+        else:
+            UserBalance.objects.filter(username=username).update(balance=float(balance.balance)-float(cost))
+
         transact = UserTransactions_Time(username=username, ticker=ticker, amount=buy_amount, timestamp= datetime.now())
         transact.save()
         transaction, created = UserTransactions.objects.get_or_create(username=username, ticker=ticker, defaults={"amount": buy_amount})
@@ -76,6 +90,15 @@ def sell(request):
         sell_amount = request.POST.get('buy_box', "")
         ticker = request.POST.get('ticker_box', "")
         
+        status = Coins.objects.filter(ticker=ticker)
+        if(status.count() == 0):
+            pass
+        else:
+            status = Coins.objects.get(ticker=ticker)
+            cost = float(status.current_price)*float(sell_amount)
+        balance, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": 0})
+        UserBalance.objects.filter(username=username).update(balance=float(balance.balance)+float(cost))
+
         if(UserTransactions.objects.filter(username=username, ticker=ticker).count()<=0):
             return render(request, 'account/signedinhome.html', {"do_not_own": {"ticker": ticker}})
 
