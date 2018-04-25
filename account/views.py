@@ -50,14 +50,16 @@ def buy(request):
         status = Coins.objects.filter(ticker=ticker)
 
         if(status.count() == 0):
-            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": "THAT COIN DOESN'T EXIST!!", "ticker": ticker}})
+            print("no coin")
+            return render(request, 'account/signedinhome.html', {"no_coin": {"ticker": ticker}})
 
         status = Coins.objects.get(ticker=ticker)
         cost = float(status.current_price)*float(buy_amount)
         balance, created = UserBalance.objects.get_or_create(username=username, defaults={"balance": 0})
 
         if(float(balance.balance) - cost < 0):
-            return render(request, 'account/signedinhome.html', {"curr_amounts": {"amount": "INSUFFICIENT FUNDS!! Choose a new amount!", "ticker": ""}})
+            print("no_funds")
+            return render(request, 'account/signedinhome.html', {"no_funds": {"ticker": ticker}})
         else:
             UserBalance.objects.filter(username=username).update(balance=float(balance.balance)-float(cost))
 

@@ -210,6 +210,10 @@
                         <h5 style="color: rgb(255, 255, 255)">You have sold all your {{sold_all.ticker}}</h5>
                         {% endif %} {% if do_not_own %}
                         <h5 style="color: rgb(255, 255, 255)">You do not own {{do_not_own.ticker}}</h5>
+                        {% endif %} {% if no_coin %}
+                        <h5 style="color: rgb(255, 255, 255)">THAT COIN DOESN'T EXIST!</h5>
+                        {% endif %} {% if no_funds %}
+                        <h5 style="color: rgb(255, 255, 255)">INSUFFICIENT FUNDS! CHANGE AMOUNT TO BUY/INCREASE FUNDS!</h5>
                         {% endif %}
                     </center>
                 </div>
