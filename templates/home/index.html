@@ -7,8 +7,13 @@
     <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#search_box").on('keyup', function () {
@@ -118,7 +123,7 @@
     </div>
 </head>
 
-<body class="body" style="background-color:#c6e8ff">
+<body class="body" style="background-color:#c6e8ff" onload="getBTCPrice(); getETHPrice(); getLTCPrice();">
     <div class="container-fluid" style="min-height:95%; ">
         <style>
             .header {
@@ -158,14 +163,14 @@
         </nav>
         <div class="well bs-sidebar" id="sidebar" style="background-color:#0070bb">
             <center>
-                <div>
-                    <form type="get" action="{%url 'index_search' %}" style="margin: 0">{% csrf_token %}
-                            <div class="ui-widget">
-                        <input id="search_box" type="text" name="search_box" placeholder="Search...">
-                        <button id="search_submit" type="submit">onward</button>
+                    <div id="search_div" class="ui-front">
+                            <form type="get" action="{%url 'search' %}" style="margin: 0">{% csrf_token %}
+                                <div class="ui-widget">
+                                    <input id="search_box" type="text" name="search_box" placeholder="Search...">
+                                    <button id="search_submit" type="submit">onward</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
                 <br>
                 <div class="well bs-sidebar" id="sidebar" style="background-color:#005f9e">
                     <center>
@@ -181,7 +186,7 @@
 
         <div class="jumbotron text-center">
             <center>
-                <h3 style="text-align:center;">COIN HISTORY</h3>
+                <h4 style="text-align:center;">COIN HISTORY</h4>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                 <script type="text/javascript">
                     google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -197,7 +202,7 @@
                             ['2015', 455, 11, 0],
                             ['2016', 978, 15, 0],
                             ['2017', 19343, 735, 302],
-                            ['2018', 16937, 1413, 295]
+                            ['2018', 8793, 609, 143],
                         ]);
 
                         var options = {

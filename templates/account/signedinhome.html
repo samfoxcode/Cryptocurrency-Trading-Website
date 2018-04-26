@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -41,6 +40,7 @@
         .slideanim {
             visibility: hidden;
         }
+
         .slide {
             animation-name: slide;
             -webkit-animation-name: slide;
@@ -86,7 +86,33 @@
             .logo {
                 font-size: 150px;
             }
+            
         }
+        table {
+			border-collapse: collapse;
+			width: 50%;
+			margin: auto;
+			margin-top: 1em;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border: 1px solid #000;
+		}
+
+		tr:nth-child(even) {
+			background-color: #c6e8ff
+		}
+
+		th {
+			background-color: #005f9e;
+			color: white;
+		}
+		.chart_div {
+			margin: auto;
+			width: 50%;
+		}
     </style>
     <title>
         PHFEASANT PHFINANCIAL
@@ -120,7 +146,7 @@
     </div>
 </head>
 
-<body class="body" style="background-color:#c6e8ff">
+<body class="body" style="background-color:#c6e8ff" onload="getBTCPrice(); getETHPrice(); getLTCPrice();">
     <div class="container-fluid" style="min-height:95%; ">
         <style>
             .header {
@@ -179,9 +205,9 @@
                 <div id="search_div" class="ui-front">
                     <form type="get" action="{%url 'search' %}" style="margin: 0">{% csrf_token %}
                         <div class="ui-widget">
-                        <input id="search_box" type="text" name="search_box" placeholder="Search...">
-                        <button id="search_submit" type="submit">onward</button>
-                    </div>
+                            <input id="search_box" type="text" name="search_box" placeholder="Search...">
+                            <button id="search_submit" type="submit">onward</button>
+                        </div>
                     </form>
                 </div>
                 <br>
@@ -195,12 +221,12 @@
                     </center>
                 </div>
                 <div class="well bs-sidebar" id="sidebar" style="background-color:#005f9e">
-                        <center>
-                            {% if search %} {% for tweet in search.tweets %}
-                            <h5 style="color: rgb(255, 255, 255)">{{tweet.text}}</h5>
-                            {% endfor %} {% endif %}
-                        </center>
-                    </div>
+                    <center>
+                        {% if search %} {% for tweet in search.tweets %}
+                        <h5 style="color: rgb(255, 255, 255)">{{tweet.text}}</h5>
+                        {% endfor %} {% endif %}
+                    </center>
+                </div>
                 <div class="well bs-sidebar" id="sidebar" style="background-color:#005f9e">
                     <center>
                         {% if curr_amounts %}
@@ -222,7 +248,7 @@
 
         <div class="jumbotron text-center">
             <center>
-                <h3 style="text-align:center;">COIN HISTORY</h3>
+                <h4 style="text-align:center;">COIN HISTORY</h4>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                 <script type="text/javascript">
                     google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -238,7 +264,7 @@
                             ['2015', 455, 11, 0],
                             ['2016', 978, 15, 0],
                             ['2017', 19343, 735, 302],
-                            ['2018', 16937, 1413, 295]
+                            ['2018', 8793, 609, 143],
                         ]);
 
                         var options = {
@@ -257,9 +283,123 @@
                 </script>
                 <div id="chart_div"></div>
             </center>
+            </div>
+            <div id="table_div">
+                <script type="text/javascript">
+                    var btcxmlhttp = new XMLHttpRequest();
+                    var btcurl = "https://api.coinmarketcap.com/v1/ticker/bitcoin/";
+
+                    var ethxmlhttp = new XMLHttpRequest();
+                    var ethurl = "https://api.coinmarketcap.com/v1/ticker/ethereum/";
+
+                    var ltcxmlhttp = new XMLHttpRequest();
+                    var ltcurl = "https://api.coinmarketcap.com/v1/ticker/litecoin/";
+
+                    var currentBTCPrice;
+                    var currentETHPrice;
+                    var currentLTCPrice;
+                    btcxmlhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var myArr = JSON.parse(this.responseText);
+                            myBTCFunction(myArr);
+                        }
+                    };
+
+                    ethxmlhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var myArr = JSON.parse(this.responseText);
+                            myETHFunction(myArr);
+                        }
+                    };
+
+                    ltcxmlhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var myArr = JSON.parse(this.responseText);
+                            myLTCFunction(myArr);
+                        }
+                    };
+
+                    btcxmlhttp.open("GET", btcurl, true);
+                    ethxmlhttp.open("GET", ethurl, true);
+                    ltcxmlhttp.open("GET", ltcurl, true);
+
+                    function getBTCPrice() {
+                        btcxmlhttp.send();
+                    }
+
+                    function getETHPrice() {
+                        ethxmlhttp.send();
+                    }
+
+                    function getLTCPrice() {
+                        ltcxmlhttp.send();
+                    }
+
+                    function myBTCFunction(arr) {
+                        var out = "";
+                        var diff;
+                        var i;
+                        for (i = 0; i < arr.length; i++) {
+                            currentBTCPrice = arr[i].price_usd;
+                            out += "$" + currentBTCPrice + " ";
+                        }
+                        document.getElementById("btcprice").innerHTML = out;
+
+                    }
+                    function myETHFunction(arr) {
+                        var out = "";
+                        var diff;
+                        var textColor;
+                        var i;
+                        for (i = 0; i < arr.length; i++) {
+                            currentETHPrice = arr[i].price_usd;
+                            out += "$" + currentETHPrice + " ";
+                        }
+                        document.getElementById("ethprice").innerHTML = out;
+                    }
+                    function myLTCFunction(arr) {
+                        var out = "";
+                        var diff;
+                        var i;
+                        for (i = 0; i < arr.length; i++) {
+                            currentLTCPrice = arr[i].price_usd;
+                            out += "$" + currentLTCPrice + " ";
+                        }
+                        document.getElementById("ltcprice").innerHTML = out;
+                    }
+
+                    setTimeout(getBTCPrice, 5 * 60 * 1000);
+                    setTimeout(getETHPrice, 5 * 60 * 1000);
+                    setTimeout(getLTCPrice, 5 * 60 * 1000);
+                </script>
+
+                <table id="listingstable">
+                    <tr>
+                        <th>Coin Name</th>
+                        <th>Current Price (USD)</th>
+                    </tr>
+                    <tr>
+                        <td>Bitcoin</td>
+                        <td>
+                            <p id="btcprice"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ethereum</td>
+                        <td>
+                            <p id="ethprice"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Litecoin</td>
+                        <td>
+                            <p id="ltcprice"></p>
+                        </td>
+                    </tr>
+                </table>
+                </div>
         </div>
     </div>
-
     <div></div>
     <style>
         * {
