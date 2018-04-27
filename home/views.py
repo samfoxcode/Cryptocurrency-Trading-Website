@@ -92,3 +92,11 @@ def save_file(file, path=''):
                 fd.write(chunk)
         fd.close()
 
+def contact_em(request):
+    if request.method == "POST":
+        text = request.POST.get('comments', "")
+        sender = request.POST.get('email', "")
+        name = request.POST.get('name', "")
+        send_mail('Customer Email', name + " says " + str(text) ,sender,['samf1596@gmail.com'],fail_silently=False,)
+        return render(request, 'home/contact.html', {"email_sent": {"sent": 1234}})
+

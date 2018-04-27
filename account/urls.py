@@ -12,5 +12,6 @@ urlpatterns = [
     path('buy/', views.buy, name='buy'),
     path('sell/', views.sell, name='sell'),
     path('load_info/', views.load_info, name='load_info'),
-    path('update_balance/', views.update_balance, name='update_balance')
+    path('update_balance/', views.update_balance, name='update_balance'),
+    path('contact_email', views.contact_email, name='contact_email')
 ]

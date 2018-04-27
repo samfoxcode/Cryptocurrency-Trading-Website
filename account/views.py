@@ -134,3 +134,11 @@ def update_balance(request):
         UserBalance.objects.filter(username=username).update(balance=float(balance)+float(transaction.balance))
         balance = UserBalance.objects.get(username=username)
         return render(request, 'account/user.html', {"info": {"holding": holdings, "balances":balance, "user":user.creditcard%10000}})
+
+def contact_email(request):
+    if request.method == "POST":
+        text = request.POST.get('comments', "")
+        sender = request.POST.get('email', "")
+        name = request.POST.get('name', "")
+        send_mail('Customer Email', name + " says " + str(text) ,sender,['samf1596@gmail.com'],fail_silently=False,)
+        return render(request, 'account/contact.html', {"email_sent": {"sent": 1234}})

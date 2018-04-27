@@ -40,7 +40,6 @@
                 </li>
             </ul>
         </div>
-        <h2 class="text-center">Connect with Us</h2>
         <div class="row">
             <div class="col-sm-5">
                 <p>Contact us and we'll get back to you within 24 hours.</p>
@@ -52,6 +51,7 @@
                     <span class="glyphicon glyphicon-envelope"></span> email@PHFPHF.com</p>
             </div>
             <div class="col-sm-7">
+                <form type="post" method="post" action="{%url 'contact_email' %}" style="margin: 0">{% csrf_token %}
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
@@ -67,6 +67,7 @@
                         <button class="btn btn-default pull-right" type="submit">Send</button>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

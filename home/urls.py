@@ -12,6 +12,7 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path('login/',views.login_view,name = 'login'),
     path('logout/',views.logout_view,name = 'logout'),
-    path('autocomplete/', views.autocomplete, name='autocomplete')
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
+    path('contact_em/', views.contact_em, name='contact_em')
     
 ]
